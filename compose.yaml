@@ -1,0 +1,27 @@
+
+services:
+  db:
+    image: mysql:latest
+    container_name: mysql_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: admin123
+      MYSQL_DATABASE: test
+      MYSQL_USER: kcepeda
+      MYSQL_PASSWORD: admin123
+    ports:
+      - "3306:3306"
+    volumes:
+      # Carpeta para persistencia de datos
+      - db_data:/var/lib/mysql
+      # Carpeta para scripts de inicialización
+      - ./init-db:/docker-entrypoint-initdb.d
+    networks:
+      - backend
+
+volumes:
+  db_data:
+
+networks:
+  backend:
+    driver: bridge
